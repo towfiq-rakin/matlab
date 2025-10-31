@@ -26,11 +26,17 @@ nrzi_signal = zeros(1,length(t));
 for i = 1 : length(data)
     if data(i) == 1
         nrzl_signal((i-1)*fs + 1 : i*fs) = 0;
-        nrzi_signal((i-1)*fs + 1 : i*fs) = 1;
     else
         nrzl_signal((i-1)*fs + 1 : i*fs) = 1;
-        nrzi_signal((i-1)*fs + 1 : i*fs) = 0;
     end
+end
+
+current_state = 0;
+for i = 2 : length(data)
+    if data(i) == 1
+        current_state = ~current_state;
+    end
+    nrzi_signal((i-1)*fs + 1 : i*fs) = current_state;
 end
 
 figure;

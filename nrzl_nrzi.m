@@ -56,3 +56,24 @@ xlabel('Time');
 ylabel('Amplitude');
 title('NRZ-I Encoding');
 grid on;
+
+
+% NRZL without bitrate and Time duration
+(* data = [1 0 1 1 0 0 1 0];
+fs = 100;
+t = 0 : 1/fs : length(data)-1/fs;
+
+nrzl = zeros(1,length(t));
+
+for i = 1 : length(data)
+    if data(i) == 1
+        nrzl((i-1)*fs + 1 : i*fs) = 0;
+    else
+        nrzl((i-1)*fs + 1 : i*fs) = 1;
+    end
+end
+
+figure;
+stairs(t,nrzl,'LineWidth',2);
+ylim([-0.5 1.5]);
+grid on; *)

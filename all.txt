@@ -59,6 +59,39 @@ for i = 1 : length(SNR_dB)
 end
 --------------------------------------------------
 
+% NRZL NRZI---------------------------------------
+data = [1 0 1 1 0 0 1 0];
+BitRate = 1;
+Tb = 1/BitRate;
+
+fs = 100;
+t = 0 : 1/fs : length(data)*Tb - 1/fs;
+
+nrzl = zeros(1,length(t));
+nrzi = zeros(1,length(t));
+
+currentLevel = 0;
+for i = 1 : length(data)
+    if data(i) == 1
+        nrzl((i-1)*fs + 1 : fs*i) = 0;
+        currentLevel = ~currentLevel;
+    else
+        nrzl((i-1)*fs + 1 : fs*i) = 1;
+    end
+    nrzi((i-1)*fs + 1 : fs*i) = currentLevel;
+end
+
+subplot(2,1,1);
+stairs(t,nrzl,'LineWidth',2);
+ylim([-0.5 1.5]);
+grid on;
+
+subplot(2,1,2);
+stairs(t,nrzi,'LineWidth',2);
+ylim([-0.5 1.5]);
+grid on;
+--------------------------------------------------
+
 % ASK --------------------------------------------
 data = [1 0 1 1 0 0 1 0];
 fs = 100;

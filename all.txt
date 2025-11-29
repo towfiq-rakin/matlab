@@ -205,22 +205,22 @@ ylim([-1.5 1.5]);
 
 
 FDMA --------------------------------------------
-Fs = 20000; % sampling frequency (Hz)
-T = 0.2; % signal duration (s)
-t = 0:1/Fs:T-1/Fs; % time vector
-numChannels = 4; % number of FDMA channels/stations
-baseband_freqs = [50, 120, 200, 300]; % baseband tone frequencies (Hz)
+Fs = 20000;
+T = 0.2; 
+t = 0:1/Fs:T-1/Fs; 
+numChannels = 4; 
+baseband_freqs = [50, 120, 200, 300]; 
 amp = [1.0, 0.8, 0.6, 0.5]; 
-guard_band = 400; % guard band between channels (Hz)
-channel_bw = 300; % approximate bandwidth allocated to each channel (Hz)
-start_fc = 1000; % starting carrier freq (Hz)
+guard_band = 400; 
+channel_bw = 300; 
+start_fc = 1000; 
 
 fc = zeros(1,numChannels);
 for k = 1:numChannels
     fc(k) = start_fc + (k-1)*(channel_bw + guard_band);
 end
 
-% Create baseband messages and modulate onto carriers (DSB-SC)
+
 baseband = zeros(numChannels, length(t));
 modulated = zeros(numChannels, length(t));
 for k = 1:numChannels
@@ -228,7 +228,7 @@ for k = 1:numChannels
     modulated(k,:) = baseband(k,:).*cos(2*pi*fc(k)*t); % DSB-SC modulation
 end
 
-% Multiplex: sum all modulated signals to form composite FDMA signal
+
 composite = sum(modulated,1);
 
 % Add small noise (optional) to simulate channel noise
